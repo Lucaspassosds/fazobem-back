@@ -1,19 +1,21 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { QuestionsController } from './questions/questions.controller';
-import { QuestionsModule } from './questions/questions.module';
+import { QuestionsController } from './questions/controllers/questions.controller';
+import { QuestionsModule } from './questions/modules/questions.module';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './config/database.module';
-import { QuestionsService } from './questions/questions.service';
+import { QuestionsService } from './questions/services/questions.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Question } from './questions/entities/question.entity';
+import { AnswersModule } from './questions/modules/answers.module';
+import { Answer } from './questions/entities/answer.entity';
 
 @Module({
   imports: [
     QuestionsModule,
-    QuestionsModule,
+    AnswersModule,
     DatabaseModule,
-    TypeOrmModule.forFeature([Question]),
+    TypeOrmModule.forFeature([Question, Answer]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
