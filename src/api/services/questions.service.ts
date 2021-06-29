@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateQuestionDto } from '../dto/create-question.dto';
 import { UpdateQuestionDto } from '../dto/update-question.dto';
+import { Answer } from '../entities/answer.entity';
 import { Question } from '../entities/question.entity';
 
 @Injectable()
@@ -10,6 +11,8 @@ export class QuestionsService {
   constructor(
     @InjectRepository(Question)
     private questionRepository: Repository<Question>,
+    @InjectRepository(Answer)
+    private answerRepository: Repository<Answer>,
   ) {}
 
   async create(question: CreateQuestionDto) {
@@ -28,6 +31,25 @@ export class QuestionsService {
       return question;
     }
     throw new HttpException('Question not found', HttpStatus.NOT_FOUND);
+  }
+
+  async findAnswers(id: number) {
+    const question = await this.questionRepository.findOne(id);
+    if (!question) {
+      throw new HttpException('Question not found', HttpStatus.NOT_FOUND);
+    }
+    const answers = await this.answerRepository.find({
+      where: {
+        question,
+      },
+    });
+    if (answers) {
+      return answers;
+    }
+    throw new HttpException(
+      'There are no answers for this question',
+      HttpStatus.NOT_FOUND,
+    );
   }
 
   async updateQuestion(id: number, question: UpdateQuestionDto) {

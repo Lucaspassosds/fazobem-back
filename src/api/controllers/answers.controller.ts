@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AnswersService } from '../services/answers.service';
 import { CreateAnswerDto } from '../dto/create-answer.dto';
@@ -28,6 +29,11 @@ export class AnswersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.answersService.findOne(+id);
+  }
+
+  @Get('/find/:type')
+  findByType(@Param('type') type: string) {
+    return this.answersService.findAllByType(type);
   }
 
   @Patch(':id')

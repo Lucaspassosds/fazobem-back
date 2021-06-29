@@ -18,6 +18,6 @@ export class Question extends BaseEntity {
   @Column()
   public content: string;
 
-  @OneToMany((type) => Answer, (answer) => answer.id)
+  @OneToMany((type) => Answer, (answer) => answer.id, { cascade: true })
   public answers: Answer[];
 }

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { getManager, Repository } from 'typeorm';
 import { CreateAnswerDto } from '../dto/create-answer.dto';
 import { UpdateAnswerDto } from '../dto/update-answer.dto';
 import { Answer } from '../entities/answer.entity';
@@ -16,7 +16,6 @@ export class AnswersService {
   ) {}
 
   async create(answer: CreateAnswerDto) {
-    console.log('ANSWER', answer);
     const question = await this.questionRepository.findOne(answer.questionId);
     if (question) {
       const newAnswer = await this.answerRepository.create(answer);
@@ -32,6 +31,22 @@ export class AnswersService {
 
   findAll() {
     return this.answerRepository.find();
+  }
+
+  async findAllByType(type: string) {
+    const answers = await this.answerRepository
+      .createQueryBuilder('answer')
+      .innerJoin('answer.question', 'question')
+      .where('question.type = :type', { type })
+      .getMany();
+    console.log('QUERY EXEC', answers);
+    if (answers) {
+      return answers;
+    }
+    throw new HttpException(
+      'No answers were found with this type',
+      HttpStatus.NOT_FOUND,
+    );
   }
 
   async findOne(id: number) {

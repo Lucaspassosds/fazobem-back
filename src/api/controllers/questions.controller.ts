@@ -30,6 +30,11 @@ export class QuestionsController {
     return this.questionsService.findOne(+id);
   }
 
+  @Get(':id/:answers')
+  findAnswers(@Param('id') id: string) {
+    return this.questionsService.findAnswers(+id);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
