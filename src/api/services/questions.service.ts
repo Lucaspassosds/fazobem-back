@@ -5,36 +5,25 @@ import { CreateQuestionDto } from '../dto/create-question.dto';
 import { UpdateQuestionDto } from '../dto/update-question.dto';
 import { Answer } from '../entities/answer.entity';
 import { Question } from '../entities/question.entity';
+import { BaseService } from './base.service';
 
 @Injectable()
-export class QuestionsService {
+export class QuestionsService extends BaseService<Question> {
   constructor(
-    @InjectRepository(Question)
-    private questionRepository: Repository<Question>,
     @InjectRepository(Answer)
     private answerRepository: Repository<Answer>,
-  ) {}
+  ) {
+    super(Question);
+  }
 
   async create(question: CreateQuestionDto) {
-    const newQuestion = await this.questionRepository.create(question);
-    await this.questionRepository.save(newQuestion);
+    const newQuestion = await this.baseRepository.create(question);
+    await this.baseRepository.save(newQuestion);
     return newQuestion;
   }
 
-  findAll() {
-    return this.questionRepository.find();
-  }
-
-  async findOne(id: number) {
-    const question = await this.questionRepository.findOne(id);
-    if (question) {
-      return question;
-    }
-    throw new HttpException('Question not found', HttpStatus.NOT_FOUND);
-  }
-
   async findAnswers(id: number) {
-    const question = await this.questionRepository.findOne(id);
+    const question = await this.baseRepository.findOne(id);
     if (!question) {
       throw new HttpException('Question not found', HttpStatus.NOT_FOUND);
     }
@@ -50,21 +39,5 @@ export class QuestionsService {
       'There are no answers for this question',
       HttpStatus.NOT_FOUND,
     );
-  }
-
-  async updateQuestion(id: number, question: UpdateQuestionDto) {
-    await this.questionRepository.update(id, question);
-    const updatedQuestion = await this.questionRepository.findOne(id);
-    if (updatedQuestion) {
-      return updatedQuestion;
-    }
-    throw new HttpException('Question not found', HttpStatus.NOT_FOUND);
-  }
-
-  async deleteQuestion(id: number) {
-    const deleteResponse = await this.questionRepository.delete(id);
-    if (!deleteResponse.affected) {
-      throw new HttpException('Question not found', HttpStatus.NOT_FOUND);
-    }
   }
 }

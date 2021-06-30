@@ -27,7 +27,5 @@ import { Answer } from './api/entities/answer.entity';
       }),
     }),
   ],
-  controllers: [QuestionsController],
-  providers: [QuestionsService],
 })
 export class AppModule {}

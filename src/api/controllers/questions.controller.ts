@@ -40,11 +40,11 @@ export class QuestionsController {
     @Param('id') id: string,
     @Body() updateQuestionDto: UpdateQuestionDto,
   ) {
-    return this.questionsService.updateQuestion(+id, updateQuestionDto);
+    return this.questionsService.updateElement(+id, updateQuestionDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.questionsService.deleteQuestion(+id);
+    return this.questionsService.deleteElement(+id);
   }
 }

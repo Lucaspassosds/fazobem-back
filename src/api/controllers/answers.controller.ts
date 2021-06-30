@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  UseInterceptors,
 } from '@nestjs/common';
 import { AnswersService } from '../services/answers.service';
 import { CreateAnswerDto } from '../dto/create-answer.dto';
@@ -38,11 +37,11 @@ export class AnswersController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAnswerDto: UpdateAnswerDto) {
-    return this.answersService.updateAnswer(+id, updateAnswerDto);
+    return this.answersService.updateElement(+id, updateAnswerDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.answersService.deleteAnswer(+id);
+    return this.answersService.deleteElement(+id);
   }
 }
