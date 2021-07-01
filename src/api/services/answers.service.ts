@@ -1,8 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getManager, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateAnswerDto } from '../dto/create-answer.dto';
-import { UpdateAnswerDto } from '../dto/update-answer.dto';
 import { Answer } from '../entities/answer.entity';
 import { Question } from '../entities/question.entity';
 import { BaseService } from './base.service';
