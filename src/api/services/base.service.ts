@@ -1,12 +1,12 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { EntityTarget, getRepository, Repository } from 'typeorm';
+import { EntityTarget, getConnection, Repository } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 
 export abstract class BaseService<T> {
   protected baseRepository: Repository<T>;
 
   constructor(model: EntityTarget<T>) {
-    this.baseRepository = getRepository(model);
+    this.baseRepository = getConnection().getRepository(model);
   }
 
   findAll() {

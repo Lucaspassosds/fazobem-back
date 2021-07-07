@@ -33,7 +33,8 @@ export class AnswersService extends BaseService<Answer> {
     const answers = await this.baseRepository
       .createQueryBuilder('answer')
       .innerJoin('answer.question', 'question')
-      .where('question.type = :type', { type })
+      .innerJoin('question.type', 'type')
+      .where('type.name = :type', { type })
       .getMany();
     console.log('QUERY EXEC', answers);
     if (answers) {

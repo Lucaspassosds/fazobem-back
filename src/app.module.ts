@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { QuestionsController } from './api/controllers/questions.controller';
 import { QuestionsModule } from './api/modules/questions.module';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './config/database.module';
-import { QuestionsService } from './api/services/questions.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Question } from './api/entities/question.entity';
 import { AnswersModule } from './api/modules/answers.module';
 import { Answer } from './api/entities/answer.entity';
+import { QuestionTypeModule } from './api/modules/question-type.module';
 
 @Module({
   imports: [
     QuestionsModule,
     AnswersModule,
+    QuestionTypeModule,
     DatabaseModule,
     TypeOrmModule.forFeature([Question, Answer]),
     ConfigModule.forRoot({
@@ -28,4 +28,5 @@ import { Answer } from './api/entities/answer.entity';
     }),
   ],
 })
-export class AppModule {}
+// eslint-disable-next-line prettier/prettier
+export class AppModule { }

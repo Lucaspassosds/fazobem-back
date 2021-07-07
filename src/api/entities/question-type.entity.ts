@@ -2,19 +2,19 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Question } from './question.entity';
 
 @Entity()
-export class Answer extends BaseEntity {
+export class QuestionType extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id: number;
 
   @Column()
-  public content: string;
+  public name: string;
 
-  @ManyToOne(() => Question, (question) => question.id)
-  public question: Question;
+  @OneToMany(() => Question, (question) => question.id, { cascade: true })
+  public questions: Question[];
 }
