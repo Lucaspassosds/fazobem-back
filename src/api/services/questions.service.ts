@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateQuestionDto } from '../dto/create-question.dto';
 import { Answer } from '../entities/answer.entity';
+import { QuestionType } from '../entities/question-type.entity';
 import { Question } from '../entities/question.entity';
 import { BaseService } from './base.service';
 
@@ -11,14 +12,24 @@ export class QuestionsService extends BaseService<Question> {
   constructor(
     @InjectRepository(Answer)
     private answerRepository: Repository<Answer>,
+    @InjectRepository(QuestionType)
+    private qtRepository: Repository<QuestionType>,
   ) {
     super(Question);
   }
 
   async create(question: CreateQuestionDto) {
-    const newQuestion = await this.baseRepository.create(question);
-    await this.baseRepository.save(newQuestion);
-    return newQuestion;
+    const questionType = await this.qtRepository.findOne(question.typeId);
+    if (questionType) {
+      const newQuestion = await this.baseRepository.create(question);
+      newQuestion.type = questionType;
+      await this.baseRepository.save(newQuestion);
+      return newQuestion;
+    }
+    throw new HttpException(
+      'No type was found for this question!',
+      HttpStatus.NOT_FOUND,
+    );
   }
 
   async findAnswers(id: number) {

@@ -1,4 +1,4 @@
 export class CreateQuestionDto {
   content: string;
-  type: string;
+  typeId: number;
 }

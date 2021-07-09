@@ -8,6 +8,7 @@ import { Question } from './api/entities/question.entity';
 import { AnswersModule } from './api/modules/answers.module';
 import { Answer } from './api/entities/answer.entity';
 import { QuestionTypeModule } from './api/modules/question-type.module';
+import { QuestionType } from './api/entities/question-type.entity';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { QuestionTypeModule } from './api/modules/question-type.module';
     AnswersModule,
     QuestionTypeModule,
     DatabaseModule,
-    TypeOrmModule.forFeature([Question, Answer]),
+    TypeOrmModule.forFeature([Question, Answer, QuestionType]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -28,5 +29,4 @@ import { QuestionTypeModule } from './api/modules/question-type.module';
     }),
   ],
 })
-// eslint-disable-next-line prettier/prettier
-export class AppModule { }
+export class AppModule {}

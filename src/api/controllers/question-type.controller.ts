@@ -11,7 +11,7 @@ import { CreateQuestionTypeDto } from '../dto/create-question-type.dto';
 import { UpdateQuestionTypeDto } from '../dto/update-question-type.dto';
 import { QuestionTypeService } from '../services/question-type.service';
 
-@Controller('questions')
+@Controller('types')
 export class QuestionTypeController {
   constructor(private readonly questionTypeService: QuestionTypeService) {}
 
