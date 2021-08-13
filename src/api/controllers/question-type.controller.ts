@@ -30,6 +30,11 @@ export class QuestionTypeController {
     return this.questionTypeService.findOne(+id);
   }
 
+  @Get('/find/:id')
+  findTypes(@Param('id') id: string) {
+    return this.questionTypeService.findQuestions(+id);
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() dto: UpdateQuestionTypeDto) {
     return this.questionTypeService.updateElement(+id, dto);
