@@ -80,11 +80,11 @@ export class QuestionsController {
   }
 
   @Delete(':id')
+  @ApiOperation({ description: 'Deletes question' })
   @ApiOkResponse({
     description: 'Question has been deleted.',
     type: Question,
   })
-  @ApiOperation({ description: 'Deletes question' })
   remove(@Param('id') id: string) {
     return this.questionsService.deleteElement(+id);
   }
