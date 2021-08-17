@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
+import { ApiBody } from '@nestjs/swagger';
 import { CreateQuestionTypeDto } from '../dto/create-question-type.dto';
 import { UpdateQuestionTypeDto } from '../dto/update-question-type.dto';
 import { QuestionTypeService } from '../services/question-type.service';
@@ -16,6 +17,7 @@ export class QuestionTypeController {
   constructor(private readonly questionTypeService: QuestionTypeService) {}
 
   @Post()
+  @ApiBody({ type: [CreateQuestionTypeDto] })
   create(@Body() dto: CreateQuestionTypeDto) {
     return this.questionTypeService.create(dto);
   }
