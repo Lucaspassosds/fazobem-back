@@ -28,7 +28,7 @@ export class QuestionsController {
   constructor(private readonly questionsService: QuestionsService) {}
 
   @Post()
-  @ApiBody({ type: [CreateQuestionDto] })
+  @ApiBody({ type: CreateQuestionDto })
   @ApiOperation({ description: 'Creates new question' })
   @ApiCreatedResponse({
     description: 'Question has been created.',

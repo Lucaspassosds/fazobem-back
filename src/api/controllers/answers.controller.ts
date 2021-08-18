@@ -27,7 +27,7 @@ export class AnswersController {
   constructor(private readonly answersService: AnswersService) {}
 
   @Post()
-  @ApiBody({ type: [CreateAnswerDto] })
+  @ApiBody({ type: CreateAnswerDto })
   @ApiOperation({ description: 'Creates new answer' })
   @ApiCreatedResponse({
     description: 'Answer has been created.',
@@ -68,7 +68,7 @@ export class AnswersController {
 
   @Patch(':id')
   @ApiOperation({ description: 'Updates Answer' })
-  @ApiBody({ type: [CreateAnswerDto] })
+  @ApiBody({ type: CreateAnswerDto })
   @ApiResponse({
     description: 'Answer has been updated.',
     type: Answer,

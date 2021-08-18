@@ -28,7 +28,7 @@ export class QuestionTypeController {
   constructor(private readonly questionTypeService: QuestionTypeService) {}
 
   @Post()
-  @ApiBody({ type: [CreateQuestionTypeDto] })
+  @ApiBody({ type: CreateQuestionTypeDto })
   @ApiOperation({ description: 'Creates new question type' })
   @ApiCreatedResponse({
     description: 'Question type has been created.',
@@ -67,7 +67,7 @@ export class QuestionTypeController {
 
   @Patch(':id')
   @ApiOperation({ description: 'Updates Question type' })
-  @ApiBody({ type: [CreateQuestionTypeDto] })
+  @ApiBody({ type: CreateQuestionTypeDto })
   @ApiResponse({
     description: 'Question type has been updated.',
     type: Question,

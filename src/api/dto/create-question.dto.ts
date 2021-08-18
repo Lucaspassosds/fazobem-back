@@ -11,7 +11,7 @@ export class CreateQuestionDto {
 
   @ApiProperty({
     description: "The question's related type Id",
-    example: '1',
+    example: 1,
     type: Number,
     required: true,
   })
