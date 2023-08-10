@@ -18,9 +18,10 @@ import {
   ApiOperation,
   ApiParam,
   ApiResponse,
+  ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
-
+@ApiTags('organization')
 @Controller('organization')
 export class OrganizationController {
   constructor(private readonly organizationService: OrganizationService) {}
@@ -46,7 +47,7 @@ export class OrganizationController {
     return this.organizationService.findAll();
   }
 
-  @Get(':id')
+  @Get(':organizationId')
   @ApiOperation({ description: 'Returns single organization based on Id' })
   @ApiOkResponse({
     description: 'Answer have been returned',
@@ -61,7 +62,7 @@ export class OrganizationController {
     return this.organizationService.findOne(+organizationId);
   }
 
-  @Patch(':id')
+  @Patch(':organizationId')
   @ApiOperation({ description: 'Updates Organization' })
   @ApiBody({ type: UpdateOrganizationDto })
   @ApiResponse({

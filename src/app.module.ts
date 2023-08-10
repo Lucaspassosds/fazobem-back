@@ -5,12 +5,14 @@ import { DatabaseModule } from './config/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationModule } from './api/organization/organization.module';
 import { Organization } from './api/organization/entities/organization.entity';
+import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entity';
 
 @Module({
   imports: [
     DatabaseModule,
     OrganizationModule,
-    TypeOrmModule.forFeature([Organization]),
+    TypeOrmModule.forFeature([Organization, User]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -21,6 +23,7 @@ import { Organization } from './api/organization/entities/organization.entity';
         PORT: Joi.number(),
       }),
     }),
+    UserModule,
   ],
 })
 export class AppModule {}
