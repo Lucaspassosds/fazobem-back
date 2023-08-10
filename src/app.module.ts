@@ -3,11 +3,14 @@ import { ConfigModule } from '@nestjs/config';
 import * as Joi from '@hapi/joi';
 import { DatabaseModule } from './config/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { OrganizationModule } from './api/organization/organization.module';
+import { Organization } from './api/organization/entities/organization.entity';
 
 @Module({
   imports: [
     DatabaseModule,
-    TypeOrmModule.forFeature([]),
+    OrganizationModule,
+    TypeOrmModule.forFeature([Organization]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
