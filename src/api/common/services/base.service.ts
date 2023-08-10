@@ -2,7 +2,7 @@ import { HttpException, HttpStatus } from '@nestjs/common';
 import { Repository, DeepPartial, BaseEntity } from 'typeorm';
 
 export abstract class BaseService<T extends BaseEntity> {
-  protected constructor(private readonly baseRepository: Repository<T>) {}
+  public constructor(private readonly baseRepository: Repository<T>) {}
 
   async findAll(): Promise<T[]> {
     return this.baseRepository.find();
