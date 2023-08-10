@@ -5,14 +5,23 @@ import { DatabaseModule } from './config/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationModule } from './api/organization/organization.module';
 import { Organization } from './api/organization/entities/organization.entity';
-import { UserModule } from './user/user.module';
-import { User } from './user/entities/user.entity';
+import { User } from './api/user/entities/user.entity';
+import { UserModule } from './api/user/user.module';
+import { OrganizationAdminModule } from './api/organization-admin/organization-admin.module';
+import { OrganizationAdmin } from './api/organization-admin/entities/organization-admin.entity';
+import { VoluntaryModule } from './api/voluntary/voluntary.module';
+import { Voluntary } from './api/voluntary/entities/voluntary.entity';
 
 @Module({
   imports: [
     DatabaseModule,
     OrganizationModule,
-    TypeOrmModule.forFeature([Organization, User]),
+    TypeOrmModule.forFeature([
+      Organization,
+      User,
+      OrganizationAdmin,
+      Voluntary,
+    ]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -24,6 +33,8 @@ import { User } from './user/entities/user.entity';
       }),
     }),
     UserModule,
+    OrganizationAdminModule,
+    VoluntaryModule,
   ],
 })
 export class AppModule {}
