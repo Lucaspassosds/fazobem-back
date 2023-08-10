@@ -5,8 +5,8 @@ import { DatabaseModule } from './config/database.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationModule } from './api/organization/organization.module';
 import { Organization } from './api/organization/entities/organization.entity';
-import { UserModule } from './user/user.module';
-import { User } from './user/entities/user.entity';
+import { User } from './api/user/entities/user.entity';
+import { UserModule } from './api/user/user.module';
 
 @Module({
   imports: [
