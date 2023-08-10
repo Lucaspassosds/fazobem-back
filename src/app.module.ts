@@ -9,12 +9,19 @@ import { User } from './api/user/entities/user.entity';
 import { UserModule } from './api/user/user.module';
 import { OrganizationAdminModule } from './api/organization-admin/organization-admin.module';
 import { OrganizationAdmin } from './api/organization-admin/entities/organization-admin.entity';
+import { VoluntaryModule } from './api/voluntary/voluntary.module';
+import { Voluntary } from './api/voluntary/entities/voluntary.entity';
 
 @Module({
   imports: [
     DatabaseModule,
     OrganizationModule,
-    TypeOrmModule.forFeature([Organization, User, OrganizationAdmin]),
+    TypeOrmModule.forFeature([
+      Organization,
+      User,
+      OrganizationAdmin,
+      Voluntary,
+    ]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
         POSTGRES_HOST: Joi.string().required(),
@@ -27,6 +34,7 @@ import { OrganizationAdmin } from './api/organization-admin/entities/organizatio
     }),
     UserModule,
     OrganizationAdminModule,
+    VoluntaryModule,
   ],
 })
 export class AppModule {}
