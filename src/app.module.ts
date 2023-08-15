@@ -19,6 +19,7 @@ import { OrganizationEvent } from './api/organization-event/entities/organizatio
 import { VoluntaryRole } from './api/voluntary-role/entities/voluntary-role.entity';
 import { ShiftModule } from './api/shift/shift.module';
 import { Shift } from './api/shift/entities/shift.entity';
+import { UserSession } from './auth/entities/user-session.entity';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { Shift } from './api/shift/entities/shift.entity';
       OrganizationEvent,
       VoluntaryRole,
       Shift,
+      UserSession,
     ]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
