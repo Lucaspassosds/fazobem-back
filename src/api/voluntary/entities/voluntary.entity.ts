@@ -1,6 +1,14 @@
 import { BaseTable } from 'src/api/common/entities/base.entity';
 import { User } from 'src/api/user/entities/user.entity';
-import { Column, Entity, JoinColumn, OneToOne, RelationId } from 'typeorm';
+import { VoluntaryShift } from 'src/api/voluntary-shifts/entities/voluntary-shift.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  RelationId,
+} from 'typeorm';
 
 @Entity()
 export class Voluntary extends BaseTable {
@@ -16,4 +24,7 @@ export class Voluntary extends BaseTable {
 
   @Column({ enum: ['yes', 'no'], default: 'no' })
   legalAge: string;
+
+  @OneToMany(() => VoluntaryShift, (shift) => shift.voluntary)
+  voluntaryShift: VoluntaryShift[];
 }
