@@ -10,6 +10,7 @@ import { VoluntaryRole } from 'src/api/voluntary-role/entities/voluntary-role.en
 import { Location } from 'src/api/location/entities/location.entity';
 import { Shift } from 'src/api/shift/entities/shift.entity';
 import { UserSession } from 'src/auth/entities/user-session.entity';
+import { VoluntaryShift } from 'src/api/voluntary-shifts/entities/voluntary-shift.entity';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { UserSession } from 'src/auth/entities/user-session.entity';
           VoluntaryRole,
           Shift,
           UserSession,
+          VoluntaryShift,
         ],
         synchronize: true,
       }),
