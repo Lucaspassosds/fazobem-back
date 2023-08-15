@@ -28,5 +28,5 @@ export class CreateLocationDto {
     required: true,
     description: 'Never pass this value. It is overwritten by the server.',
   })
-  companyId: string;
+  organizationId: string;
 }
