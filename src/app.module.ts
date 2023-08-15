@@ -13,6 +13,7 @@ import { VoluntaryModule } from './api/voluntary/voluntary.module';
 import { Voluntary } from './api/voluntary/entities/voluntary.entity';
 import { LocationModule } from './api/location/location.module';
 import { OrganizationEventModule } from './api/organization-event/organization-event.module';
+import { VoluntaryRoleModule } from './api/voluntary-role/voluntary-role.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { OrganizationEventModule } from './api/organization-event/organization-e
     VoluntaryModule,
     LocationModule,
     OrganizationEventModule,
+    VoluntaryRoleModule,
   ],
 })
 export class AppModule {}
