@@ -14,6 +14,9 @@ import { Voluntary } from './api/voluntary/entities/voluntary.entity';
 import { LocationModule } from './api/location/location.module';
 import { OrganizationEventModule } from './api/organization-event/organization-event.module';
 import { VoluntaryRoleModule } from './api/voluntary-role/voluntary-role.module';
+import { Location } from './api/location/entities/location.entity';
+import { OrganizationEvent } from './api/organization-event/entities/organization-event.entity';
+import { VoluntaryRole } from './api/voluntary-role/entities/voluntary-role.entity';
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import { VoluntaryRoleModule } from './api/voluntary-role/voluntary-role.module'
       User,
       OrganizationAdmin,
       Voluntary,
+      Location,
+      OrganizationEvent,
+      VoluntaryRole,
     ]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({

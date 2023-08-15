@@ -5,6 +5,9 @@ import { Organization } from 'src/api/organization/entities/organization.entity'
 import { User } from 'src/api/user/entities/user.entity';
 import { OrganizationAdmin } from 'src/api/organization-admin/entities/organization-admin.entity';
 import { Voluntary } from 'src/api/voluntary/entities/voluntary.entity';
+import { OrganizationEvent } from 'src/api/organization-event/entities/organization-event.entity';
+import { VoluntaryRole } from 'src/api/voluntary-role/entities/voluntary-role.entity';
+import { Location } from 'src/api/location/entities/location.entity';
 
 @Module({
   imports: [
@@ -18,7 +21,15 @@ import { Voluntary } from 'src/api/voluntary/entities/voluntary.entity';
         username: configService.get('POSTGRES_USER'),
         password: configService.get('POSTGRES_PASSWORD'),
         database: configService.get('POSTGRES_DB'),
-        entities: [Organization, User, OrganizationAdmin, Voluntary],
+        entities: [
+          Organization,
+          User,
+          OrganizationAdmin,
+          Voluntary,
+          Location,
+          OrganizationEvent,
+          VoluntaryRole,
+        ],
         synchronize: true,
       }),
     }),
