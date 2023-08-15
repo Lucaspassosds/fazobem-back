@@ -8,6 +8,8 @@ import { Voluntary } from 'src/api/voluntary/entities/voluntary.entity';
 import { OrganizationEvent } from 'src/api/organization-event/entities/organization-event.entity';
 import { VoluntaryRole } from 'src/api/voluntary-role/entities/voluntary-role.entity';
 import { Location } from 'src/api/location/entities/location.entity';
+import { Shift } from 'src/api/shift/entities/shift.entity';
+import { UserSession } from 'src/auth/entities/user-session.entity';
 
 @Module({
   imports: [
@@ -29,6 +31,8 @@ import { Location } from 'src/api/location/entities/location.entity';
           Location,
           OrganizationEvent,
           VoluntaryRole,
+          Shift,
+          UserSession,
         ],
         synchronize: true,
       }),

@@ -17,6 +17,9 @@ import { VoluntaryRoleModule } from './api/voluntary-role/voluntary-role.module'
 import { Location } from './api/location/entities/location.entity';
 import { OrganizationEvent } from './api/organization-event/entities/organization-event.entity';
 import { VoluntaryRole } from './api/voluntary-role/entities/voluntary-role.entity';
+import { ShiftModule } from './api/shift/shift.module';
+import { Shift } from './api/shift/entities/shift.entity';
+import { UserSession } from './auth/entities/user-session.entity';
 
 @Module({
   imports: [
@@ -30,6 +33,8 @@ import { VoluntaryRole } from './api/voluntary-role/entities/voluntary-role.enti
       Location,
       OrganizationEvent,
       VoluntaryRole,
+      Shift,
+      UserSession,
     ]),
     ConfigModule.forRoot({
       validationSchema: Joi.object({
@@ -47,6 +52,7 @@ import { VoluntaryRole } from './api/voluntary-role/entities/voluntary-role.enti
     LocationModule,
     OrganizationEventModule,
     VoluntaryRoleModule,
+    ShiftModule,
   ],
 })
 export class AppModule {}
