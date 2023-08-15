@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseTable } from 'src/api/common/entities/base.entity';
+import { Location } from 'src/api/location/entities/location.entity';
 import { OrganizationAdmin } from 'src/api/organization-admin/entities/organization-admin.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 
@@ -14,4 +15,7 @@ export class Organization extends BaseTable {
     (organizationAdmin) => organizationAdmin.organization,
   )
   organizationAdmin: OrganizationAdmin[];
+
+  @OneToMany(() => Location, (location) => location.organization)
+  location: Location[];
 }

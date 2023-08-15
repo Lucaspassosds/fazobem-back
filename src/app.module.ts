@@ -11,6 +11,7 @@ import { OrganizationAdminModule } from './api/organization-admin/organization-a
 import { OrganizationAdmin } from './api/organization-admin/entities/organization-admin.entity';
 import { VoluntaryModule } from './api/voluntary/voluntary.module';
 import { Voluntary } from './api/voluntary/entities/voluntary.entity';
+import { LocationModule } from './api/location/location.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { Voluntary } from './api/voluntary/entities/voluntary.entity';
     UserModule,
     OrganizationAdminModule,
     VoluntaryModule,
+    LocationModule,
   ],
 })
 export class AppModule {}
