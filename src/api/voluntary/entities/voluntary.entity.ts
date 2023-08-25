@@ -1,6 +1,6 @@
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { User } from 'src/api/user/entities/user.entity';
-import { VoluntaryShift } from 'src/api/voluntary-shifts/entities/voluntary-shift.entity';
+import { BaseTable } from '../../common/entities/base.entity';
+import { User } from '../../user/entities/user.entity';
+import { VoluntaryShift } from '../../voluntary-shifts/entities/voluntary-shift.entity';
 import {
   Column,
   Entity,
@@ -19,11 +19,8 @@ export class Voluntary extends BaseTable {
   @RelationId((voluntary: Voluntary) => voluntary.user)
   userId: string;
 
-  @Column({ nullable: true, length: 255 })
-  address: string;
-
-  @Column({ enum: ['yes', 'no'], default: 'no' })
-  legalAge: string;
+  @Column({ nullable: false, length: 100 })
+  birthdate: string;
 
   @OneToMany(() => VoluntaryShift, (shift) => shift.voluntary)
   voluntaryShift: VoluntaryShift[];

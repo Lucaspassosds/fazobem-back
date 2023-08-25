@@ -10,8 +10,10 @@ import {
 import { ShiftService } from './shift.service';
 import { CreateShiftDto } from './dto/create-shift.dto';
 import { UpdateShiftDto } from './dto/update-shift.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('shift')
+@ApiTags('shift')
 export class ShiftController {
   constructor(private readonly shiftService: ShiftService) {}
 

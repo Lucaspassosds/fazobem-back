@@ -6,10 +6,10 @@ import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from 'src/env.validation';
 import { AuthService } from './auth.service';
 import { CurrentUser } from './get-user.decorator';
-import { OrganizationAdminService } from 'src/api/organization-admin/organization-admin.service';
-import { VoluntaryService } from 'src/api/voluntary/voluntary.service';
-import { User } from 'src/api/user/entities/user.entity';
-import { UserRole } from 'src/constants/constants';
+import { OrganizationAdminService } from '../api/organization-admin/organization-admin.service';
+import { VoluntaryService } from '../api/voluntary/voluntary.service';
+import { User } from '../api/user/entities/user.entity';
+import { UserRole } from '../constants/constants';
 dotenv.config();
 @Injectable()
 export class JwtAuthStrategy extends PassportStrategy(Strategy) {

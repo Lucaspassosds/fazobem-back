@@ -1,18 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { UserSession } from 'src/auth/entities/user-session.entity';
-import { UserRole } from 'src/constants/constants';
+import { BaseTable } from '../../common/entities/base.entity';
+import { UserSession } from '../../../auth/entities/user-session.entity';
+import { UserRole } from '../../../constants/constants';
 import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 export class User extends BaseTable {
-  @Column({ nullable: true, length: 100 })
+  @Column({ nullable: true, length: 255 })
   @ApiProperty()
-  firstName: string;
-
-  @Column({ nullable: true, length: 100 })
-  @ApiProperty()
-  lastName: string;
+  name: string;
 
   @Column({ unique: true, nullable: true, length: 255 })
   @ApiProperty()
@@ -22,7 +18,12 @@ export class User extends BaseTable {
   @ApiProperty()
   password: string;
 
-  @Column({ length: 100, nullable: false, default: UserRole.voluntary })
+  @Column({
+    length: 100,
+    nullable: false,
+    default: UserRole.voluntary,
+    enum: UserRole,
+  })
   role: UserRole;
 
   @OneToMany(() => UserSession, (session) => session.user)

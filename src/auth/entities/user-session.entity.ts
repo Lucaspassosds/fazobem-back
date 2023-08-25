@@ -5,8 +5,8 @@ import {
   ManyToOne,
   RelationId,
 } from 'typeorm';
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { User } from 'src/api/user/entities/user.entity';
+import { BaseTable } from '../../api/common/entities/base.entity';
+import { User } from '../../api/user/entities/user.entity';
 
 @Entity()
 export class UserSession extends BaseTable {

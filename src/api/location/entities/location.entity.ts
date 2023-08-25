@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, RelationId } from 'typeorm';
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { Organization } from 'src/api/organization/entities/organization.entity';
+import { BaseTable } from '../../common/entities/base.entity';
+import { Organization } from '../../organization/entities/organization.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()

@@ -10,8 +10,10 @@ import {
 import { VoluntaryRoleService } from './voluntary-role.service';
 import { CreateVoluntaryRoleDto } from './dto/create-voluntary-role.dto';
 import { UpdateVoluntaryRoleDto } from './dto/update-voluntary-role.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('voluntary-role')
+@ApiTags('voluntary-role')
 export class VoluntaryRoleController {
   constructor(private readonly voluntaryRoleService: VoluntaryRoleService) {}
 

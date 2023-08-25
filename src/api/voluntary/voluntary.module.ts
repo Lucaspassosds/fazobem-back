@@ -4,6 +4,7 @@ import { VoluntaryController } from './voluntary.controller';
 
 @Module({
   controllers: [VoluntaryController],
-  providers: [VoluntaryService]
+  providers: [VoluntaryService],
+  exports: [VoluntaryService],
 })
 export class VoluntaryModule {}

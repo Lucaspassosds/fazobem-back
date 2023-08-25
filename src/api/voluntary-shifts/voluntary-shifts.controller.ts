@@ -10,8 +10,10 @@ import {
 import { VoluntaryShiftsService } from './voluntary-shifts.service';
 import { CreateVoluntaryShiftDto } from './dto/create-voluntary-shift.dto';
 import { UpdateVoluntaryShiftDto } from './dto/update-voluntary-shift.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('voluntary-shifts')
+@ApiTags('voluntary-shifts')
 export class VoluntaryShiftsController {
   constructor(
     private readonly voluntaryShiftsService: VoluntaryShiftsService,

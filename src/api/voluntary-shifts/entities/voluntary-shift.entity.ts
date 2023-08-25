@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { Shift } from 'src/api/shift/entities/shift.entity';
-import { Voluntary } from 'src/api/voluntary/entities/voluntary.entity';
+import { BaseTable } from '../../common/entities/base.entity';
+import { Shift } from '../../shift/entities/shift.entity';
+import { Voluntary } from '../../voluntary/entities/voluntary.entity';
 import {
   Entity,
   Column,

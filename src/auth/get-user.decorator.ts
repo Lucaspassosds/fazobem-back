@@ -1,8 +1,8 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { OrganizationAdmin } from 'src/api/organization-admin/entities/organization-admin.entity';
-import { User } from 'src/api/user/entities/user.entity';
-import { Voluntary } from 'src/api/voluntary/entities/voluntary.entity';
-import { UserRole } from 'src/constants/constants';
+import { OrganizationAdmin } from '../api/organization-admin/entities/organization-admin.entity';
+import { User } from '../api/user/entities/user.entity';
+import { Voluntary } from '../api/voluntary/entities/voluntary.entity';
+import { UserRole } from '../constants/constants';
 
 export type CurrentUser = {
   user: User;

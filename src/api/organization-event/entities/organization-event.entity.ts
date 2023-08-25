@@ -1,8 +1,8 @@
 import { Entity, Column, ManyToOne, RelationId, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { Location } from 'src/api/location/entities/location.entity';
-import { Shift } from 'src/api/shift/entities/shift.entity';
+import { BaseTable } from '../../common/entities/base.entity';
+import { Location } from '../../location/entities/location.entity';
+import { Shift } from '../../shift/entities/shift.entity';
 
 @Entity()
 export class OrganizationEvent extends BaseTable {
