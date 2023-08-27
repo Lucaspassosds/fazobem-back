@@ -59,7 +59,7 @@ export class OrganizationController {
     description: 'The Id of a organization',
   })
   findOne(@Param('organizationId') organizationId: string) {
-    return this.organizationService.findOne(+organizationId);
+    return this.organizationService.findOne(organizationId);
   }
 
   @Patch(':organizationId')
@@ -79,7 +79,7 @@ export class OrganizationController {
     @Body() updateOrganizationDto: UpdateOrganizationDto,
   ) {
     return this.organizationService.update(
-      +organizationId,
+      organizationId,
       updateOrganizationDto,
     );
   }
@@ -96,6 +96,6 @@ export class OrganizationController {
     description: 'The Id of a organization',
   })
   remove(@Param('organizationId') organizationId: string) {
-    return this.organizationService.delete(+organizationId);
+    return this.organizationService.delete(organizationId);
   }
 }

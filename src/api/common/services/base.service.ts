@@ -1,14 +1,14 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Repository, DeepPartial, BaseEntity } from 'typeorm';
 
-export abstract class BaseService<T extends BaseEntity> {
+export class BaseService<T extends BaseEntity> {
   public constructor(public readonly baseRepository: Repository<T>) {}
 
   async findAll(): Promise<T[]> {
     return this.baseRepository.find();
   }
 
-  async findOne(id: number): Promise<T> {
+  async findOne(id: string): Promise<T> {
     const entity = await (this.baseRepository as any).findOne({
       where: { id },
     });
@@ -23,7 +23,7 @@ export abstract class BaseService<T extends BaseEntity> {
     return this.baseRepository.save(newEntity);
   }
 
-  async update(id: number, entity: DeepPartial<T>): Promise<T> {
+  async update(id: string, entity: DeepPartial<T>): Promise<T> {
     const existingEntity = await (this.baseRepository as any).findOne({
       where: { id },
     });
@@ -35,7 +35,7 @@ export abstract class BaseService<T extends BaseEntity> {
     return this.baseRepository.save(updatedEntity);
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     const deleteResponse = await this.baseRepository.delete(id);
     if (!deleteResponse.affected) {
       throw new HttpException('Entity not found', HttpStatus.NOT_FOUND);

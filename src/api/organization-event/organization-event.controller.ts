@@ -31,7 +31,7 @@ export class OrganizationEventController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.organizationEventService.findOne(+id);
+    return this.organizationEventService.findOne(id);
   }
 
   @Patch(':id')
@@ -40,13 +40,13 @@ export class OrganizationEventController {
     @Body() updateOrganizationEventDto: UpdateOrganizationEventDto,
   ) {
     return this.organizationEventService.update(
-      +id,
+      id,
       updateOrganizationEventDto,
     );
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.organizationEventService.delete(+id);
+    return this.organizationEventService.delete(id);
   }
 }

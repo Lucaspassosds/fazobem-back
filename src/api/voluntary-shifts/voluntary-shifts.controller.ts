@@ -31,7 +31,7 @@ export class VoluntaryShiftsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.voluntaryShiftsService.findOne(+id);
+    return this.voluntaryShiftsService.findOne(id);
   }
 
   @Patch(':id')
@@ -39,11 +39,11 @@ export class VoluntaryShiftsController {
     @Param('id') id: string,
     @Body() updateVoluntaryShiftDto: UpdateVoluntaryShiftDto,
   ) {
-    return this.voluntaryShiftsService.update(+id, updateVoluntaryShiftDto);
+    return this.voluntaryShiftsService.update(id, updateVoluntaryShiftDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.voluntaryShiftsService.delete(+id);
+    return this.voluntaryShiftsService.delete(id);
   }
 }

@@ -29,7 +29,7 @@ export class VoluntaryRoleController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.voluntaryRoleService.findOne(+id);
+    return this.voluntaryRoleService.findOne(id);
   }
 
   @Patch(':id')
@@ -37,11 +37,11 @@ export class VoluntaryRoleController {
     @Param('id') id: string,
     @Body() updateVoluntaryRoleDto: UpdateVoluntaryRoleDto,
   ) {
-    return this.voluntaryRoleService.update(+id, updateVoluntaryRoleDto);
+    return this.voluntaryRoleService.update(id, updateVoluntaryRoleDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.voluntaryRoleService.delete(+id);
+    return this.voluntaryRoleService.delete(id);
   }
 }
