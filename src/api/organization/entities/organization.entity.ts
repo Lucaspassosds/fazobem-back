@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { Location } from 'src/api/location/entities/location.entity';
-import { OrganizationAdmin } from 'src/api/organization-admin/entities/organization-admin.entity';
+import { BaseTable } from '../../common/entities/base.entity';
+import { Location } from '../../location/entities/location.entity';
+import { OrganizationAdmin } from '../../organization-admin/entities/organization-admin.entity';
 import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()

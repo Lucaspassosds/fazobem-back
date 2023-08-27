@@ -10,8 +10,10 @@ import {
 import { OrganizationEventService } from './organization-event.service';
 import { CreateOrganizationEventDto } from './dto/create-organization-event.dto';
 import { UpdateOrganizationEventDto } from './dto/update-organization-event.dto';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('organization-event')
+@ApiTags('organization-event')
 export class OrganizationEventController {
   constructor(
     private readonly organizationEventService: OrganizationEventService,

@@ -1,7 +1,14 @@
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { Organization } from 'src/api/organization/entities/organization.entity';
-import { User } from 'src/api/user/entities/user.entity';
-import { Entity, JoinColumn, ManyToOne, OneToOne, RelationId } from 'typeorm';
+import { BaseTable } from '../../common/entities/base.entity';
+import { Organization } from '../../organization/entities/organization.entity';
+import { User } from '../../user/entities/user.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
+  RelationId,
+} from 'typeorm';
 
 @Entity()
 export class OrganizationAdmin extends BaseTable {
@@ -11,6 +18,9 @@ export class OrganizationAdmin extends BaseTable {
 
   @RelationId((organizationAdmin: OrganizationAdmin) => organizationAdmin.user)
   userId: string;
+
+  @Column({ nullable: false, default: false })
+  isRegistered: boolean;
 
   @ManyToOne(() => Organization, { nullable: false })
   organization: Organization;

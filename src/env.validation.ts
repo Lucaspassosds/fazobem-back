@@ -6,4 +6,6 @@ export class EnvironmentVariables {
   POSTGRES_DB: string;
   PORT: string;
   JWT_SECRET: string;
+  REFRESH_TOKEN_EXPIRY: string;
+  ACCESS_TOKEN_EXPIRY: string;
 }

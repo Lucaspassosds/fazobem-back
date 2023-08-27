@@ -4,6 +4,6 @@ import { VoluntaryShiftsController } from './voluntary-shifts.controller';
 
 @Module({
   controllers: [VoluntaryShiftsController],
-  providers: [VoluntaryShiftsService]
+  providers: [VoluntaryShiftsService],
 })
 export class VoluntaryShiftsModule {}

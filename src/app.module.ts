@@ -22,6 +22,7 @@ import { Shift } from './api/shift/entities/shift.entity';
 import { UserSession } from './auth/entities/user-session.entity';
 import { VoluntaryShiftsModule } from './api/voluntary-shifts/voluntary-shifts.module';
 import { VoluntaryShift } from './api/voluntary-shifts/entities/voluntary-shift.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -48,6 +49,8 @@ import { VoluntaryShift } from './api/voluntary-shifts/entities/voluntary-shift.
         POSTGRES_DB: Joi.string().required(),
         PORT: Joi.number(),
       }),
+      isGlobal: true,
+      expandVariables: true,
     }),
     UserModule,
     OrganizationAdminModule,
@@ -57,6 +60,7 @@ import { VoluntaryShift } from './api/voluntary-shifts/entities/voluntary-shift.
     VoluntaryRoleModule,
     ShiftModule,
     VoluntaryShiftsModule,
+    AuthModule,
   ],
 })
 export class AppModule {}

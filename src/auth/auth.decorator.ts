@@ -3,7 +3,7 @@ import { ApiBearerAuth } from '@nestjs/swagger';
 import { Roles } from './roles.decorator';
 import { RolesGuard } from './roles.guard';
 import { JwtAuthGuard } from './jwt-auth.strategy';
-import { UserRole } from 'src/constants/constants';
+import { UserRole } from '../constants/constants';
 
 export const UserAuth = (...roles: Array<UserRole>) => {
   if (roles.length > 0) {

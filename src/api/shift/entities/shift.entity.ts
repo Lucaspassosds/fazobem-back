@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseTable } from 'src/api/common/entities/base.entity';
-import { OrganizationEvent } from 'src/api/organization-event/entities/organization-event.entity';
-import { VoluntaryRole } from 'src/api/voluntary-role/entities/voluntary-role.entity';
-import { VoluntaryShift } from 'src/api/voluntary-shifts/entities/voluntary-shift.entity';
+import { BaseTable } from '../../common/entities/base.entity';
+import { OrganizationEvent } from '../../organization-event/entities/organization-event.entity';
+import { VoluntaryRole } from '../../voluntary-role/entities/voluntary-role.entity';
+import { VoluntaryShift } from '../../voluntary-shifts/entities/voluntary-shift.entity';
 import { Entity, Column, ManyToOne, OneToMany, RelationId } from 'typeorm';
 
 @Entity()
