@@ -6,17 +6,25 @@ import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
 export class User extends BaseTable {
-  @Column({ nullable: true, length: 255 })
+  @Column({ nullable: false, length: 255 })
   @ApiProperty()
   name: string;
 
-  @Column({ unique: true, nullable: true, length: 255 })
+  @Column({ unique: true, nullable: false, length: 255 })
   @ApiProperty()
   email: string;
 
-  @Column({ nullable: true, length: 200 })
+  @Column({ nullable: false, length: 200 })
   @ApiProperty()
   password: string;
+
+  @Column({ nullable: true, length: 200 })
+  @ApiProperty({ required: true })
+  securityQuestion: string;
+
+  @Column({ nullable: true, length: 200 })
+  @ApiProperty({ required: true })
+  securityAnswer: string;
 
   @Column({
     length: 100,

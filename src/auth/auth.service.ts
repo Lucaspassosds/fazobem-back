@@ -6,18 +6,29 @@ import {
 } from '@nestjs/common';
 import 'isomorphic-fetch';
 import { ConfigService } from '@nestjs/config';
-import { DataSource, QueryRunner, Repository } from 'typeorm';
+import { DataSource, In, QueryRunner, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { OrganizationAdminService } from '../api/organization-admin/organization-admin.service';
 import { VoluntaryService } from '../api/voluntary/voluntary.service';
 import { UserSession } from './entities/user-session.entity';
-import { VoluntaryRegisterDto } from './dto/register.dto';
+import {
+  ChangePasswordDto,
+  LoginDto,
+  RequestChangePasswordDto,
+  VoluntaryRegisterDto,
+} from './dto/register.dto';
 import { User } from '../api/user/entities/user.entity';
-import { getAuthTokenExpiryTime, hashPassword } from '../utils/utils';
+import {
+  comparePassword,
+  getAuthTokenExpiryTime,
+  hashPassword,
+} from '../utils/utils';
 import { Voluntary } from '../api/voluntary/entities/voluntary.entity';
 import { RegisterUserSessionDto } from './dto/user-session.dto';
 import { EnvironmentVariables } from 'src/env.validation';
+import { UserService } from 'src/api/user/user.service';
+import { UserRole } from 'src/constants/constants';
 @Injectable()
 export class AuthService {
   constructor(
@@ -28,6 +39,7 @@ export class AuthService {
     private jwtService: JwtService,
     private readonly voluntaryService: VoluntaryService,
     private readonly configService: ConfigService<EnvironmentVariables>,
+    private readonly userService: UserService,
   ) {}
 
   getUserSessionById(sessionId: string) {
@@ -37,6 +49,94 @@ export class AuthService {
         user: true,
       },
     });
+  }
+
+  async login(dto: LoginDto) {
+    const user = await this.userService.userGetOneByQueryForAuth({
+      email: dto.email,
+    });
+
+    if (!user) {
+      throw new HttpException(
+        `Looks like we don't have an account with this email yet. Sign up.`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    if (user.isDeleted) {
+      throw new HttpException(
+        `The user account has been removed. All associated data will be permanently erased after a period of 30 days.`,
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    const isPasswordMatch = await comparePassword(dto.password, user.password);
+
+    if (!isPasswordMatch) {
+      throw new HttpException(
+        `Invalid Password. Please try again.`,
+        HttpStatus.CONFLICT,
+      );
+    }
+
+    const userSession = await this.signAuthTokens(user, {
+      deviceInfo: null,
+      platform: 'web',
+      fcmToken: null,
+    });
+
+    delete user.password;
+
+    return {
+      user,
+      accessToken: userSession.accessToken,
+      accessTokenExpiry: userSession.accessTokenExpiry,
+      refreshToken: userSession.refreshToken,
+      refreshTokenExpiry: userSession.refreshTokenExpiry,
+    };
+  }
+
+  async requestChangePassword(dto: RequestChangePasswordDto) {
+    try {
+      const user = await this.userService.userGetOneByQueryForAuth({
+        email: dto.email,
+      });
+      if (!user) {
+        throw new HttpException(
+          `Looks like we don't have an account with this email yet. Sign up.`,
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      return {
+        securityQuestion: user.securityQuestion,
+      };
+    } catch (err) {
+      console.log({ err });
+      throw new InternalServerErrorException(err);
+    }
+  }
+
+  async changePassword(changePasswordDto: ChangePasswordDto) {
+    const user = await this.userService.userGetOneByQueryForAuth({
+      email: changePasswordDto.email,
+      securityAnswer: changePasswordDto.securityAnswer,
+    });
+    if (!user) {
+      throw new HttpException(
+        `Invalid Data. Please check the security answer`,
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+
+    const hashedPassword = await hashPassword(changePasswordDto.password);
+    user.password = hashedPassword;
+
+    await this.userService.userSave(user);
+
+    return {
+      message: 'Password changed successfully.',
+    };
   }
 
   async registerVoluntary(dto: VoluntaryRegisterDto) {
@@ -65,6 +165,8 @@ export class AuthService {
 
       newUser.email = dto.email;
       newUser.name = dto.name;
+      newUser.securityQuestion = dto.securityQuestion;
+      newUser.securityAnswer = dto.securityAnswer;
 
       const hashedPassword = await hashPassword(dto.password);
       newUser.password = hashedPassword;

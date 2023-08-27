@@ -12,7 +12,12 @@ import { CurrentUser, GetUser } from './get-user.decorator';
 import { JwtAuthRefreshGuard } from './jwt-auth-refresh.strategy';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentVariables } from 'src/env.validation';
-import { VoluntaryRegisterDto } from './dto/register.dto';
+import {
+  ChangePasswordDto,
+  LoginDto,
+  RequestChangePasswordDto,
+  VoluntaryRegisterDto,
+} from './dto/register.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -38,33 +43,31 @@ export class AuthController {
   //     return this.authService.registerAdmin(registerAdminDto);
   //   }
 
-  //   @Post('login')
-  //   @ApiOperation({
-  //     description: 'Login.',
-  //   })
-  //   loginAdmin(@Body() adminLoginDto: AdminLoginDto) {
-  //     return this.authService.loginAdmin(adminLoginDto);
-  //   }
+  @Post('login')
+  @ApiOperation({
+    description: 'Login.',
+  })
+  loginAdmin(@Body() login: LoginDto) {
+    return this.authService.login(login);
+  }
 
-  //   @Post('request-change-password')
-  //   @ApiOperation({
-  //     description: `Requests change of password.`,
-  //   })
-  //   requestAdminChangePassword(
-  //     @Body() requestChangePasswordDto: RequestChangePasswordDto,
-  //   ) {
-  //     return this.authService.requestAdminChangePassword(
-  //       requestChangePasswordDto,
-  //     );
-  //   }
+  @Post('request-change-password')
+  @ApiOperation({
+    description: `Requests change of password.`,
+  })
+  requestAdminChangePassword(
+    @Body() requestChangePasswordDto: RequestChangePasswordDto,
+  ) {
+    return this.authService.requestChangePassword(requestChangePasswordDto);
+  }
 
-  //   @Post('change-password')
-  //   @ApiOperation({
-  //     description: `Change/reset passsword`,
-  //   })
-  //   changeAdminPassword(@Body() changePasswordDto: ChangePasswordDto) {
-  //     return this.authService.changeAdminPassword(changePasswordDto);
-  //   }
+  @Post('change-password')
+  @ApiOperation({
+    description: `Change/reset passsword`,
+  })
+  changeAdminPassword(@Body() changePasswordDto: ChangePasswordDto) {
+    return this.authService.changePassword(changePasswordDto);
+  }
 
   //   @Post('logout')
   //   @ApiOperation({
