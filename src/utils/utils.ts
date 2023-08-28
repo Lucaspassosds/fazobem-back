@@ -18,3 +18,16 @@ export const getAuthTokenExpiryTime = (days: number) => {
   const expiryTime = new Date(now.getTime() + days * 86400000);
   return expiryTime;
 };
+
+export function generateRandomString(length: number): string {
+  const characters =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const randomString: string[] = [];
+
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    randomString.push(characters[randomIndex]);
+  }
+
+  return randomString.join('');
+}

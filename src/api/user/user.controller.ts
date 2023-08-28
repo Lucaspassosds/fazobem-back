@@ -60,7 +60,7 @@ export class UserController {
     description: 'The Id of a user',
   })
   findOne(@Param('userId') userId: string) {
-    return this.userService.findOne(+userId);
+    return this.userService.findOne(userId);
   }
 
   @Patch(':userId')
@@ -79,7 +79,7 @@ export class UserController {
     @Param('userId') userId: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.userService.update(+userId, updateUserDto);
+    return this.userService.update(userId, updateUserDto);
   }
 
   @Delete(':userId')
@@ -94,6 +94,6 @@ export class UserController {
     description: 'The Id of a user',
   })
   remove(@Param('userId') userId: string) {
-    return this.userService.delete(+userId);
+    return this.userService.delete(userId);
   }
 }
