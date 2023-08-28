@@ -15,6 +15,7 @@ import { UserSession } from './entities/user-session.entity';
 import {
   ChangePasswordDto,
   LoginDto,
+  OrganizationAdminRegisterDto,
   RequestChangePasswordDto,
   VoluntaryRegisterDto,
 } from './dto/register.dto';
@@ -29,6 +30,7 @@ import { RegisterUserSessionDto } from './dto/user-session.dto';
 import { EnvironmentVariables } from 'src/env.validation';
 import { UserService } from 'src/api/user/user.service';
 import { UserRole } from 'src/constants/constants';
+import { OrganizationAdmin } from 'src/api/organization-admin/entities/organization-admin.entity';
 @Injectable()
 export class AuthService {
   constructor(
@@ -214,6 +216,90 @@ export class AuthService {
       await queryRunner.rollbackTransaction();
       if (err.status == HttpStatus.CONFLICT) {
         throw new HttpException(err.message, HttpStatus.CONFLICT);
+      }
+      throw new InternalServerErrorException(err);
+    } finally {
+      await queryRunner.release();
+    }
+  }
+
+  async registerAdmin(dto: OrganizationAdminRegisterDto) {
+    const queryRunner = this.dataSource.createQueryRunner();
+
+    await queryRunner.connect();
+    await queryRunner.startTransaction();
+
+    try {
+      const user = await queryRunner.manager.getRepository(User).findOne({
+        where: {
+          email: dto.email,
+        },
+      });
+
+      if (!user) {
+        throw new HttpException(
+          'Email is not invited.',
+          HttpStatus.BAD_REQUEST,
+        );
+      }
+
+      const hashedPassword = await hashPassword(dto.password);
+
+      const { name, email, securityQuestion, securityAnswer } = dto;
+      const newUser = await queryRunner.manager
+        .getRepository(User)
+        .merge(user, {
+          name,
+          email,
+          securityQuestion,
+          securityAnswer,
+          password: hashedPassword,
+        });
+      const updatedUser = await queryRunner.manager
+        .getRepository(User)
+        .save(newUser);
+
+      const organizationAdmin = await queryRunner.manager
+        .getRepository(OrganizationAdmin)
+        .findOne({
+          where: {
+            user: {
+              id: updatedUser.id,
+            },
+          },
+        });
+
+      const newAdmin = await queryRunner.manager
+        .getRepository(OrganizationAdmin)
+        .merge(organizationAdmin, { isRegistered: true });
+      const updatedAdmin = await queryRunner.manager
+        .getRepository(OrganizationAdmin)
+        .save(newAdmin);
+
+      const userSession = await this.signAuthTokens(
+        updatedUser,
+        {
+          fcmToken: null,
+          platform: 'web',
+          deviceInfo: null,
+        },
+        queryRunner,
+      );
+      await queryRunner.commitTransaction();
+
+      delete user.password;
+
+      return {
+        updatedUser,
+        accessToken: userSession.accessToken,
+        accessTokenExpiry: userSession.accessTokenExpiry,
+        refreshToken: userSession.refreshToken,
+        refreshTokenExpiry: userSession.refreshTokenExpiry,
+      };
+    } catch (err) {
+      await queryRunner.rollbackTransaction();
+      if (err.status == HttpStatus.BAD_REQUEST) {
+        throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
       }
       throw new InternalServerErrorException(err);
     } finally {

@@ -15,6 +15,7 @@ import { EnvironmentVariables } from 'src/env.validation';
 import {
   ChangePasswordDto,
   LoginDto,
+  OrganizationAdminRegisterDto,
   RequestChangePasswordDto,
   VoluntaryRegisterDto,
 } from './dto/register.dto';
@@ -35,13 +36,13 @@ export class AuthController {
     return this.authService.registerVoluntary(dto);
   }
 
-  //   @Post('admins/register')
-  //   @ApiOperation({
-  //     description: 'Register an admin.',
-  //   })
-  //   registerAdmin(@Body() registerAdminDto: RegisterAdminDto) {
-  //     return this.authService.registerAdmin(registerAdminDto);
-  //   }
+  @Post('admins/register')
+  @ApiOperation({
+    description: 'Register an admin.',
+  })
+  registerAdmin(@Body() registerAdminDto: OrganizationAdminRegisterDto) {
+    return this.authService.registerAdmin(registerAdminDto);
+  }
 
   @Post('login')
   @ApiOperation({

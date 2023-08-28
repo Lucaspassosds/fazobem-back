@@ -20,7 +20,7 @@ export class VoluntaryRegisterDto {
   securityAnswer: string;
 }
 
-export class OrganzationAdminRegisterDto {
+export class OrganizationAdminRegisterDto {
   @ApiProperty({ required: true })
   name: string;
 
