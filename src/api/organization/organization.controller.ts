@@ -21,6 +21,8 @@ import {
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
+import { UserAuth } from 'src/auth/auth.decorator';
+import { UserRole } from 'src/constants/constants';
 @ApiTags('organization')
 @Controller('organization')
 export class OrganizationController {
@@ -33,6 +35,7 @@ export class OrganizationController {
     description: 'Organization has been created.',
     type: Organization,
   })
+  @UserAuth(UserRole.systemAdmin)
   create(@Body() createOrganizationDto: CreateOrganizationDto) {
     return this.organizationService.create(createOrganizationDto);
   }
@@ -43,6 +46,7 @@ export class OrganizationController {
     description: 'Organizations have been returned.',
     schema: { type: 'array', items: { $ref: getSchemaPath(Organization) } },
   })
+  @UserAuth(UserRole.systemAdmin)
   findAll() {
     return this.organizationService.findAll();
   }
@@ -58,6 +62,7 @@ export class OrganizationController {
     required: true,
     description: 'The Id of a organization',
   })
+  @UserAuth(UserRole.systemAdmin)
   findOne(@Param('organizationId') organizationId: string) {
     return this.organizationService.findOne(organizationId);
   }
@@ -74,6 +79,7 @@ export class OrganizationController {
     required: true,
     description: 'The Id of a organization',
   })
+  @UserAuth(UserRole.systemAdmin)
   update(
     @Param('organizationId') organizationId: string,
     @Body() updateOrganizationDto: UpdateOrganizationDto,
@@ -95,6 +101,7 @@ export class OrganizationController {
     required: true,
     description: 'The Id of a organization',
   })
+  @UserAuth(UserRole.systemAdmin)
   remove(@Param('organizationId') organizationId: string) {
     return this.organizationService.delete(organizationId);
   }
