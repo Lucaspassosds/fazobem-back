@@ -89,13 +89,21 @@ export class AuthService {
 
     delete user.password;
 
-    return {
+    const returnBody: any = {
       user,
       accessToken: userSession.accessToken,
       accessTokenExpiry: userSession.accessTokenExpiry,
       refreshToken: userSession.refreshToken,
       refreshTokenExpiry: userSession.refreshTokenExpiry,
     };
+
+    if (user.role === UserRole.organizationAdmin) {
+      const organizationAdmin =
+        await this.organizationAdminService.getAdminCompanies(user.id);
+      returnBody.organizationAdmin = organizationAdmin[0];
+    }
+
+    return returnBody;
   }
 
   async logout(userId: string, accessToken: string) {

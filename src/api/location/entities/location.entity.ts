@@ -25,10 +25,6 @@ export class Location extends BaseTable {
   @ApiProperty()
   state: string;
 
-  @Column({ nullable: false, length: 5 })
-  @ApiProperty()
-  zipcode: string;
-
   @Column({ nullable: false, length: 100, default: 'BR' })
   @ApiProperty()
   country: string;
