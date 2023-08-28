@@ -96,6 +96,16 @@ export class AuthService {
     };
   }
 
+  async logout(userId: string, accessToken: string) {
+    const deleteUserSessionResponse = await this.userSessionRepository.delete({
+      accessToken,
+      user: { id: userId },
+    });
+    return {
+      logout: deleteUserSessionResponse.affected > 0,
+    };
+  }
+
   async requestChangePassword(dto: RequestChangePasswordDto) {
     try {
       const user = await this.userService.userGetOneByQueryForAuth({

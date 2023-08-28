@@ -36,7 +36,8 @@ import { VoluntaryShift } from '../api/voluntary-shifts/entities/voluntary-shift
           UserSession,
           VoluntaryShift,
         ],
-        synchronize: true,
+        // WARNING: Never commit as true, only switch when ready to synchronize
+        synchronize: false,
       }),
     }),
   ],
