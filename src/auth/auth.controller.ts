@@ -69,25 +69,12 @@ export class AuthController {
     return this.authService.changePassword(changePasswordDto);
   }
 
-  //   @Post('logout')
-  //   @ApiOperation({
-  //     description: "Signs out user. Deletes user's authentication values",
-  //   })
-  //   @UserAuth()
-  //   logoutUser(@GetUser() user: CurrentUser) {
-  //     return this.authService.logout(user.readyonUserId, user.authToken);
-  //   }
-
-  //   @Post('refresh')
-  //   @ApiOperation({
-  //     description: "Signs out user. Deletes user's authentication values",
-  //   })
-  //   @ApiBearerAuth()
-  //   @UseGuards(JwtAuthRefreshGuard)
-  //   refreshToken(@GetUser() user: CurrentUser) {
-  //     if (user.authToken !== user['userSession'].refreshToken) {
-  //       throw new UnauthorizedException('Invalid refresh token');
-  //     }
-  //     return this.authService.refresh(user['userSession']);
-  //   }
+  @Post('logout')
+  @ApiOperation({
+    description: "Signs out user. Deletes user's authentication values",
+  })
+  @UserAuth()
+  logoutUser(@GetUser() user: CurrentUser) {
+    return this.authService.logout(user.userId, user.authToken);
+  }
 }
