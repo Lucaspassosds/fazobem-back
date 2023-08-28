@@ -54,7 +54,7 @@ export class OrganizationController {
   @Get(':organizationId')
   @ApiOperation({ description: 'Returns single organization based on Id' })
   @ApiOkResponse({
-    description: 'Answer have been returned',
+    description: 'Organization have been returned',
     type: Organization,
   })
   @ApiParam({

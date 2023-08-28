@@ -22,10 +22,6 @@ export class OrganizationEvent extends BaseTable {
   @ApiProperty()
   isPublished: boolean;
 
-  @Column({ nullable: false })
-  @ApiProperty()
-  isOrientationEvent: boolean;
-
   @ManyToOne(() => Location, { nullable: false })
   location: Location;
 

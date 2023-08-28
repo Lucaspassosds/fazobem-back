@@ -55,7 +55,7 @@ export class VoluntaryRoleController {
   @Get(':roleId')
   @ApiOperation({ description: 'Returns single role based on Id' })
   @ApiOkResponse({
-    description: 'Answer have been returned',
+    description: 'Role have been returned',
     type: VoluntaryRole,
   })
   @ApiParam({
