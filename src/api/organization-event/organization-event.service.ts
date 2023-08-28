@@ -34,7 +34,10 @@ export class OrganizationEventService extends BaseService<OrganizationEvent> {
       },
       relations: {
         location: true,
-        shifts: true,
+        shifts: {
+          voluntaryRole: true,
+          voluntaryShift: true,
+        },
       },
     });
   }

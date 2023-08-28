@@ -96,7 +96,7 @@ export class OrganizationEventController {
     );
   }
 
-  @Patch(':eventId')
+  @Patch('publish/:eventId')
   @ApiOperation({ description: 'Publishes OrganizationEvent' })
   @ApiResponse({
     description: 'OrganizationEvent has been updated.',

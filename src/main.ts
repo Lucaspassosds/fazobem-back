@@ -7,8 +7,8 @@ async function bootstrap() {
   app.enableCors();
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Random Quiz')
-    .setDescription('The Random Quiz API description')
+    .setTitle('Faz O Bem')
+    .setDescription('The Faz O Bem API description')
     .setVersion('1.0')
     .build();
 

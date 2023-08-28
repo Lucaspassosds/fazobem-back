@@ -14,6 +14,17 @@ export class LocationService extends BaseService<Location> {
     super(locationRepository);
   }
 
+  findAll(): Promise<Location[]> {
+    return this.baseRepository.find({
+      where: {
+        isDeleted: false,
+      },
+      relations: {
+        organizationEvents: true,
+      },
+    });
+  }
+
   create(dto: CreateLocationDto) {
     const newLocation = this.baseRepository.create(dto);
 

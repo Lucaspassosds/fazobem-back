@@ -19,6 +19,8 @@ export class OrganizationAdminService extends BaseService<OrganizationAdmin> {
   constructor(
     @InjectRepository(OrganizationAdmin)
     orgAdminRepository: Repository<OrganizationAdmin>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
     private dataSource: DataSource,
   ) {
     super(orgAdminRepository);
@@ -90,5 +92,21 @@ export class OrganizationAdminService extends BaseService<OrganizationAdmin> {
         organization: true,
       },
     });
+  }
+
+  async delete(id: string): Promise<void> {
+    const admin = await this.baseRepository.findOne({
+      where: {
+        id,
+      },
+      relations: {
+        user: true,
+      },
+    });
+
+    const user = admin.user;
+
+    this.baseRepository.remove(admin);
+    this.userRepository.remove(user);
   }
 }

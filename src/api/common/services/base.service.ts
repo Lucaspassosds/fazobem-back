@@ -36,9 +36,14 @@ export class BaseService<T extends BaseEntity> {
   }
 
   async delete(id: string): Promise<void> {
-    const deleteResponse = await this.baseRepository.delete(id);
-    if (!deleteResponse.affected) {
+    const entity = await (this.baseRepository as any).findOne({
+      where: {
+        id,
+      },
+    });
+    if (!entity) {
       throw new HttpException('Entity not found', HttpStatus.NOT_FOUND);
     }
+    const deleteResponse = await this.baseRepository.remove(entity);
   }
 }
