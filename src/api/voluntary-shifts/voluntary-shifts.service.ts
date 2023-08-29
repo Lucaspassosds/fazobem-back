@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { BaseService } from '../common/services/base.service';
 import { VoluntaryShift } from './entities/voluntary-shift.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -44,5 +44,18 @@ export class VoluntaryShiftsService extends BaseService<VoluntaryShift> {
     const voluntaryShift = this.baseRepository.save(newVoluntaryShift);
 
     return voluntaryShift;
+  }
+
+  async confirmVoluntaryShift(dto: CreateVoluntaryShiftDto) {
+    const voluntaryShift = await this.baseRepository.findOne({
+      where: {
+        shift: { id: dto.shiftId },
+        voluntary: { id: dto.voluntaryId },
+      },
+    });
+    if (!voluntaryShift) throw new NotFoundException();
+    voluntaryShift.isConfirmed = true;
+    voluntaryShift.confirmTime = new Date();
+    return this.baseRepository.save(voluntaryShift);
   }
 }

@@ -16,6 +16,51 @@ export class ShiftService extends BaseService<Shift> {
     super(shiftRepository);
   }
 
+  findAllExpanded() {
+    return this.baseRepository.find({
+      where: {
+        isDeleted: false,
+        organizationEvent: {
+          isPublished: true,
+        },
+      },
+      relations: {
+        voluntaryRole: true,
+        organizationEvent: {
+          location: true,
+        },
+        voluntaryShift: {
+          voluntary: true,
+        },
+      },
+    });
+  }
+
+  findByVoluntary(voluntaryId: string) {
+    return this.baseRepository.find({
+      where: {
+        isDeleted: false,
+        organizationEvent: {
+          isPublished: true,
+        },
+        voluntaryShift: {
+          voluntary: {
+            id: voluntaryId,
+          },
+        },
+      },
+      relations: {
+        voluntaryRole: true,
+        organizationEvent: {
+          location: true,
+        },
+        voluntaryShift: {
+          voluntary: true,
+        },
+      },
+    });
+  }
+
   create(dto: CreateShiftDto): Promise<Shift> {
     const newShift = this.baseRepository.create(dto);
 

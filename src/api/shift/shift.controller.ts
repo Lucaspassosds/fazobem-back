@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ShiftService } from './shift.service';
 import { CreateShiftDto } from './dto/create-shift.dto';
@@ -26,9 +27,18 @@ export class ShiftController {
   }
 
   @Get()
-  @UserAuth(UserRole.organizationAdmin)
-  findAll() {
+  @UserAuth(UserRole.organizationAdmin, UserRole.voluntary)
+  findAll(@Query() expand = false) {
+    if (expand) {
+      return this.shiftService.findAllExpanded();
+    }
     return this.shiftService.findAll();
+  }
+
+  @Get('voluntary/:voluntaryId')
+  @UserAuth(UserRole.voluntary)
+  findByVoluntary(@Param('voluntaryId') voluntaryId: string) {
+    return this.shiftService.findByVoluntary(voluntaryId);
   }
 
   @Get(':id')

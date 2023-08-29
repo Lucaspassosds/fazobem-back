@@ -10,7 +10,7 @@ import {
 import { VoluntaryShiftsService } from './voluntary-shifts.service';
 import { CreateVoluntaryShiftDto } from './dto/create-voluntary-shift.dto';
 import { UpdateVoluntaryShiftDto } from './dto/update-voluntary-shift.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserAuth } from 'src/auth/auth.decorator';
 import { UserRole } from 'src/constants/constants';
 
@@ -25,6 +25,15 @@ export class VoluntaryShiftsController {
   @UserAuth(UserRole.organizationAdmin, UserRole.voluntary)
   create(@Body() createVoluntaryShiftDto: CreateVoluntaryShiftDto) {
     return this.voluntaryShiftsService.create(createVoluntaryShiftDto);
+  }
+
+  @Post('confirm')
+  @ApiOperation({
+    description: 'Confirms the user shift',
+  })
+  @UserAuth(UserRole.voluntary)
+  confirmUserShift(@Body() dto: CreateVoluntaryShiftDto) {
+    return this.voluntaryShiftsService.confirmVoluntaryShift(dto);
   }
 
   @Get()
