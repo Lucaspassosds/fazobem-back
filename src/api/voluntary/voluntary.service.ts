@@ -19,6 +19,7 @@ export class VoluntaryService extends BaseService<Voluntary> {
       },
       relations: {
         user: true,
+        voluntaryShift: true,
       },
     });
   }
