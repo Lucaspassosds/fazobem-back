@@ -65,8 +65,6 @@ export class Shift extends BaseTable {
   @RelationId((shift: Shift) => shift.organizationEvent)
   organizationEventId: string;
 
-  @OneToMany(() => VoluntaryShift, (voluntaryShift) => voluntaryShift.shift, {
-    cascade: true,
-  })
+  @OneToMany(() => VoluntaryShift, (voluntaryShift) => voluntaryShift.shift)
   voluntaryShift: VoluntaryShift[];
 }
