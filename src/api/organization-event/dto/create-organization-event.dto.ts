@@ -7,15 +7,6 @@ export class CreateOrganizationEventDto {
   @ApiProperty({ required: true })
   name: string;
 
-  @ApiProperty({ required: false })
-  longitude: string;
-
-  @ApiProperty({ required: true })
-  mapZoom: number;
-
-  @ApiProperty({ required: true })
-  externalEventId: string;
-
   @ApiProperty({ required: true })
   eventDate: Date;
 

@@ -34,18 +34,6 @@ export class VoluntaryShift extends BaseTable {
   @ApiProperty()
   isConfirmed: boolean;
 
-  @Column({ default: false })
-  @ApiProperty()
-  isCheckedIn: boolean;
-
-  @Column({ type: 'timestamp', nullable: true })
-  @ApiProperty()
-  checkInTime: Date;
-
-  @Column({ default: false })
-  @ApiProperty()
-  isBlocked: boolean;
-
   @CreateDateColumn()
   @ApiProperty()
   signUpTime: Date;

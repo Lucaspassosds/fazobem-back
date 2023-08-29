@@ -22,10 +22,6 @@ export class OrganizationEvent extends BaseTable {
   @ApiProperty()
   isPublished: boolean;
 
-  @Column({ nullable: false })
-  @ApiProperty()
-  isOrientationEvent: boolean;
-
   @ManyToOne(() => Location, { nullable: false })
   location: Location;
 
@@ -34,6 +30,6 @@ export class OrganizationEvent extends BaseTable {
   )
   locationId: string;
 
-  @OneToMany(() => Shift, (shift) => shift.organizationEvent)
+  @OneToMany(() => Shift, (shift) => shift.organizationEvent, { cascade: true })
   shifts: Shift[];
 }

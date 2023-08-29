@@ -8,7 +8,7 @@ export class CreateLocationDto {
   addressLine1: string;
 
   @ApiProperty({ required: false })
-  addressLine2 = '';
+  addressLine2: string;
 
   @ApiProperty({ required: true })
   city: string;
@@ -17,15 +17,9 @@ export class CreateLocationDto {
   state: string;
 
   @ApiProperty({ required: true })
-  zipcode: string;
-
-  @ApiProperty({ required: true })
-  country: string;
-
-  @ApiProperty({ required: true })
   description: string;
   @ApiProperty({
-    required: true,
+    required: false,
     description: 'Never pass this value. It is overwritten by the server.',
   })
   organizationId: string;

@@ -1,7 +1,8 @@
-import { Entity, Column, ManyToOne, RelationId } from 'typeorm';
+import { Entity, Column, ManyToOne, RelationId, OneToMany } from 'typeorm';
 import { BaseTable } from '../../common/entities/base.entity';
 import { Organization } from '../../organization/entities/organization.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { OrganizationEvent } from 'src/api/organization-event/entities/organization-event.entity';
 
 @Entity()
 export class Location extends BaseTable {
@@ -25,10 +26,6 @@ export class Location extends BaseTable {
   @ApiProperty()
   state: string;
 
-  @Column({ nullable: false, length: 5 })
-  @ApiProperty()
-  zipcode: string;
-
   @Column({ nullable: false, length: 100, default: 'BR' })
   @ApiProperty()
   country: string;
@@ -42,4 +39,11 @@ export class Location extends BaseTable {
 
   @RelationId((location: Location) => location.organization)
   organizationId: string;
+
+  @OneToMany(
+    () => OrganizationEvent,
+    (organizationEvent) => organizationEvent.location,
+    { cascade: true },
+  )
+  organizationEvents: OrganizationEvent[];
 }

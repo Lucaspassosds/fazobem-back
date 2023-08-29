@@ -51,7 +51,7 @@ export class UserController {
   @Get(':userId')
   @ApiOperation({ description: 'Returns single user based on Id' })
   @ApiOkResponse({
-    description: 'Answer have been returned',
+    description: 'User have been returned',
     type: User,
   })
   @ApiParam({

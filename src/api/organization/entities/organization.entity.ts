@@ -16,6 +16,8 @@ export class Organization extends BaseTable {
   )
   organizationAdmin: OrganizationAdmin[];
 
-  @OneToMany(() => Location, (location) => location.organization)
+  @OneToMany(() => Location, (location) => location.organization, {
+    cascade: true,
+  })
   location: Location[];
 }
