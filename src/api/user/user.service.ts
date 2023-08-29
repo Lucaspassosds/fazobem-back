@@ -1,14 +1,15 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { BaseService } from '../../api/common/services/base.service';
-import { FindOptionsWhere, Repository } from 'typeorm';
+import { DeepPartial, FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserSession } from 'src/auth/entities/user-session.entity';
 import { OrganizationAdmin } from '../organization-admin/entities/organization-admin.entity';
 import { Voluntary } from '../voluntary/entities/voluntary.entity';
 import { VoluntaryShift } from '../voluntary-shifts/entities/voluntary-shift.entity';
 import { UserRole } from 'src/constants/constants';
-import { retry } from 'rxjs';
+import { merge, retry } from 'rxjs';
+import { hashPassword } from 'src/utils/utils';
 
 @Injectable()
 export class UserService extends BaseService<User> {
@@ -43,6 +44,21 @@ export class UserService extends BaseService<User> {
 
   userSave(user: User): Promise<User> {
     return this.baseRepository.save(user);
+  }
+
+  async update(id: string, entity: DeepPartial<User>): Promise<User> {
+    const user = await this.baseRepository.findOne({
+      where: {
+        id,
+      },
+    });
+
+    if (entity.password) {
+      entity.password = await hashPassword(entity.password);
+    }
+
+    const updatedUser = this.baseRepository.merge(user, entity);
+    return this.baseRepository.save(updatedUser);
   }
 
   async delete(id: string): Promise<void> {

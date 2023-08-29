@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param, Delete, Patch, Body } from '@nestjs/common';
 import { UserService } from './user.service';
 import {
   ApiOkResponse,
@@ -10,6 +10,7 @@ import {
 import { User } from './entities/user.entity';
 import { UserAuth } from 'src/auth/auth.decorator';
 import { UserRole } from 'src/constants/constants';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -43,6 +44,12 @@ export class UserController {
     return this.userService.findOne(userId);
   }
 
+  @Patch(':id')
+  @UserAuth(UserRole.voluntary)
+  update(@Param('id') id: string, @Body() UpdateUserDto: UpdateUserDto) {
+    return this.userService.update(id, UpdateUserDto);
+  }
+
   @Delete(':userId')
   @ApiOperation({ description: 'Deletes user' })
   @ApiOkResponse({
@@ -54,7 +61,7 @@ export class UserController {
     required: true,
     description: 'The Id of a user',
   })
-  @UserAuth(UserRole.systemAdmin)
+  @UserAuth(UserRole.systemAdmin, UserRole.voluntary)
   remove(@Param('userId') userId: string) {
     return this.userService.delete(userId);
   }
