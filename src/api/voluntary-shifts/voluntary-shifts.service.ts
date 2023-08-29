@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { BaseService } from '../common/services/base.service';
 import { VoluntaryShift } from './entities/voluntary-shift.entity';
@@ -6,6 +7,8 @@ import { DeepPartial, Repository } from 'typeorm';
 import { CreateVoluntaryShiftDto } from './dto/create-voluntary-shift.dto';
 import { Shift } from '../shift/entities/shift.entity';
 import { Voluntary } from '../voluntary/entities/voluntary.entity';
+import { User } from '../user/entities/user.entity';
+import { UserRole } from 'src/constants/constants';
 
 @Injectable()
 export class VoluntaryShiftsService extends BaseService<VoluntaryShift> {
@@ -32,7 +35,11 @@ export class VoluntaryShiftsService extends BaseService<VoluntaryShift> {
     });
   }
 
-  async create(dto: CreateVoluntaryShiftDto): Promise<VoluntaryShift> {
+  //@ts-ignore
+  async create(
+    dto: CreateVoluntaryShiftDto,
+    user: User,
+  ): Promise<VoluntaryShift> {
     const newVoluntaryShift = this.baseRepository.create(dto);
 
     newVoluntaryShift.shift = new Shift();
@@ -40,6 +47,11 @@ export class VoluntaryShiftsService extends BaseService<VoluntaryShift> {
 
     newVoluntaryShift.voluntary = new Voluntary();
     newVoluntaryShift.voluntary.id = dto.voluntaryId;
+
+    if (user.role === UserRole.organizationAdmin) {
+      newVoluntaryShift.isConfirmed = true;
+      newVoluntaryShift.confirmTime = new Date();
+    }
 
     const voluntaryShift = this.baseRepository.save(newVoluntaryShift);
 
