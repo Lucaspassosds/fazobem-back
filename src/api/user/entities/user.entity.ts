@@ -34,6 +34,6 @@ export class User extends BaseTable {
   })
   role: UserRole;
 
-  @OneToMany(() => UserSession, (session) => session.user)
+  @OneToMany(() => UserSession, (session) => session.user, { cascade: true })
   session: UserSession[];
 }

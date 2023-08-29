@@ -1,42 +1,20 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import {
-  ApiBody,
-  ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
   ApiParam,
-  ApiResponse,
   ApiTags,
   getSchemaPath,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
+import { UserAuth } from 'src/auth/auth.decorator';
+import { UserRole } from 'src/constants/constants';
 
 @ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-
-  @Post()
-  @ApiBody({ type: CreateUserDto })
-  @ApiOperation({ description: 'Creates new user' })
-  @ApiCreatedResponse({
-    description: 'User has been created.',
-    type: User,
-  })
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
 
   @Get()
   @ApiOperation({ description: 'Returns list of users' })
@@ -44,6 +22,7 @@ export class UserController {
     description: 'Users have been returned.',
     schema: { type: 'array', items: { $ref: getSchemaPath(User) } },
   })
+  @UserAuth(UserRole.systemAdmin)
   findAll() {
     return this.userService.findAll();
   }
@@ -59,27 +38,9 @@ export class UserController {
     required: true,
     description: 'The Id of a user',
   })
+  @UserAuth(UserRole.systemAdmin)
   findOne(@Param('userId') userId: string) {
     return this.userService.findOne(userId);
-  }
-
-  @Patch(':userId')
-  @ApiOperation({ description: 'Updates User' })
-  @ApiBody({ type: UpdateUserDto })
-  @ApiResponse({
-    description: 'User has been updated.',
-    type: User,
-  })
-  @ApiParam({
-    name: 'userId',
-    required: true,
-    description: 'The Id of a user',
-  })
-  update(
-    @Param('userId') userId: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    return this.userService.update(userId, updateUserDto);
   }
 
   @Delete(':userId')
@@ -93,6 +54,7 @@ export class UserController {
     required: true,
     description: 'The Id of a user',
   })
+  @UserAuth(UserRole.systemAdmin)
   remove(@Param('userId') userId: string) {
     return this.userService.delete(userId);
   }
