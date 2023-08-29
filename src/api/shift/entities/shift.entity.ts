@@ -47,10 +47,6 @@ export class Shift extends BaseTable {
   @ApiProperty()
   otherInfo: string;
 
-  @Column({ nullable: true })
-  @ApiProperty()
-  externalShiftGroupId: string;
-
   @ManyToOne(() => VoluntaryRole, { nullable: false })
   voluntaryRole: VoluntaryRole;
 

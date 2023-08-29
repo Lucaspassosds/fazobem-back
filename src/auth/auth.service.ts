@@ -102,6 +102,12 @@ export class AuthService {
         await this.organizationAdminService.getAdminCompanies(user.id);
       returnBody.organizationAdmin = organizationAdmin[0];
     }
+    if (user.role === UserRole.voluntary) {
+      const voluntary = await this.voluntaryService.getVoluntaryProfile(
+        user.id,
+      );
+      returnBody.voluntary = voluntary;
+    }
 
     return returnBody;
   }
