@@ -22,52 +22,47 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Executando o projeto
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Pré-requisitos
 
-## Installation
+#### NodeJS
+[Link de download do NodeJS](https://nodejs.org/en/download)
 
-```bash
-$ npm install
+#### PostgreSQL
+[Link de download do PostgreSQL](https://www.postgresql.org/download/)
+
+##### Atenção! Com o postgres instalado, crie para você uma base de dados chamada "fazobem" através do seu gerenciador do postgres. (No meu caso, utilizei o DBeaver).
+
+#### DBeaver
+[Link de download do PostgreSQL](https://dbeaver.io/download/)
+
+#### Nest CLI
+
+```
+npm install -g @nestjs/cli
 ```
 
-## Running the app
+### Para executar
+
+Na pasta root do projeto, execute:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
+npm run start:dev
 ```
 
-## Test
+### Para criar um usuário Administrador do Sistema
+
+Na pasta root do projeto, execute:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+npm run create-admin
 ```
 
-## Support
+Após isso, poderá fazer login
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+```
+email: admin@admin.com
+senha: admin
+```
