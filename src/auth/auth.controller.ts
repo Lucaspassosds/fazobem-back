@@ -64,7 +64,7 @@ export class AuthController {
 
   @Post('change-password')
   @ApiOperation({
-    description: `Change/reset passsword`,
+    description: `Change/reset password`,
   })
   changeAdminPassword(@Body() changePasswordDto: ChangePasswordDto) {
     return this.authService.changePassword(changePasswordDto);
